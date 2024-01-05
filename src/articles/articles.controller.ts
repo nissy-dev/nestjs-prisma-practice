@@ -23,6 +23,7 @@ export class ArticlesController {
   @Post()
   @ApiCreatedResponse({ type: ArticleEntity })
   async create(@Body() createArticleDto: CreateArticleDto) {
+    // ユーザー定義の ArticleEntity クラスを return する
     return new ArticleEntity(
       await this.articlesService.create(createArticleDto)
     );
