@@ -4,6 +4,9 @@ import { AppModule } from "./app.module";
 import { PrismaClientExceptionFilter } from "./prisma-client-exception/prisma-client-exception.filter";
 
 async function bootstrap() {
+  // trace を有効化する
+  await import("./tracer");
+
   const app = await NestFactory.create(AppModule);
 
   // whitelist: true で余計なパラメータを弾く

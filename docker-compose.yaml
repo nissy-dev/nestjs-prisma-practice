@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16.1
-    restart: always
+    image: postgres:latest
     environment:
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpass
@@ -12,5 +11,27 @@ services:
     ports:
       - 5432:5432
 
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - 13133:13133 # health_check extension
+      - 4318:4318 # OTLP http receiver
+    depends_on:
+      - postgres
+      - openobserve
+
+  openobserve:
+    image: public.ecr.aws/zinclabs/openobserve:latest
+    environment:
+      ZO_ROOT_USER_EMAIL: "root@example.com"
+      ZO_ROOT_USER_PASSWORD: "Complexpass#123"
+    ports:
+      - "5080:5080"
+    volumes:
+      - data:/data
+
 volumes:
   postgres:
+  data:
