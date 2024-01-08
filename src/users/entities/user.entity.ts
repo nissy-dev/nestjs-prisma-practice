@@ -1,27 +1,25 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { User } from "@prisma/client";
+import { Field, HideField, Int, ObjectType } from "@nestjs/graphql";
+import { User as IUser } from "@prisma/client";
 import { Exclude } from "class-transformer";
 
-export class UserEntity implements User {
-  constructor(partial: Partial<UserEntity>) {
-    Object.assign(this, partial);
-  }
-
-  @ApiProperty()
+@ObjectType()
+export class User implements IUser {
+  @Field((type) => Int)
   id: number;
 
-  @ApiProperty()
+  @Field((type) => Date)
   createdAt: Date;
 
-  @ApiProperty()
+  @Field((type) => Date)
   updatedAt: Date;
 
-  @ApiProperty()
+  @Field((type) => String)
   name: string;
 
-  @ApiProperty()
+  @Field((type) => String)
   email: string;
 
+  @HideField()
   @Exclude()
   password: string;
 }

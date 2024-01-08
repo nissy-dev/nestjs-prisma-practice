@@ -1,0 +1,73 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Article {
+  author: User
+  authorId: Int
+  body: String!
+  createdAt: DateTime!
+  description: String
+  id: Int!
+  published: Boolean!
+  title: String!
+  updatedAt: DateTime!
+}
+
+input CreateArticleInput {
+  body: String!
+  description: String
+  published: Boolean! = false
+  title: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createArticle(createArticleInput: CreateArticleInput!): Article!
+  createUser(createUserInput: CreateUserInput!): User!
+  removeArticle(id: Int!): Article!
+  removeUser(id: Int!): User!
+  updateArticle(updateArticleInput: UpdateArticleInput!): Article!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+}
+
+type Query {
+  article(id: Int!): Article!
+  articles: [Article!]!
+  draftArticles: [Article!]!
+  user(id: Int!): User!
+  users: [User!]!
+}
+
+input UpdateArticleInput {
+  body: String
+  description: String
+  id: Int!
+  published: Boolean = false
+  title: String
+}
+
+input UpdateUserInput {
+  email: String
+  id: Int!
+  name: String
+  password: String
+}
+
+type User {
+  createdAt: DateTime!
+  email: String!
+  id: Int!
+  name: String!
+  updatedAt: DateTime!
+}
